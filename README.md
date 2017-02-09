@@ -143,9 +143,11 @@ plt.legend((u'获救',u'没获救'),loc='best')
 
 plt.show()
 ```
+
 ![](raw/figure_1.png?raw=true)
 
 - 乘客属性与获救结果的关联统计
+
  - 乘客舱位等级的获救情况
  ![](raw/figure_2.png?raw=true)
  
@@ -158,13 +160,18 @@ plt.show()
  - 各登船港口的获救情况
  ![](raw/figure_5.png?raw=true)
  
+ 
+ 
+由图像可以大致得出：与乘客性别和舱位等级是强相关，与登船港口是弱相关
+ 
 ## 三、数据预处理
 
 ### 3.1 清洗无用数据
 ```python 
 titanic_data = titanic_data.drop(['PassengerId','Name','Ticket'],axis=1)
 ```
-
+ 暂时不需要这三个维度的属性
+ 
 ### 3.2 补全数据
 - Age字段 采用RandomForestRegressor自动补全
 ```python
@@ -272,6 +279,8 @@ print pd.DataFrame({'columns':list(train_df.columns)[1:],'coef':list(clf.coef_.T
 13  [0.0919778701395]  Fare_scaled
 ```
 
+ 正号是正相关，负号是负相关，数值越大，相关程度越高
+ 
 - 判断过拟合/欠拟合
 ```python
 def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,
@@ -308,7 +317,10 @@ plt.show()
 
 ![](raw/figure_6.png?raw=true)
 
+ 两条线相对平行，说明没有出现过拟合(overfitting的表现一般是训练集上得分高，而交叉验证集上要低很多，中间的gap比较大)。
+ 
 ## 五、处理test数据 
+
 - 与第三步处理过程类似
 ```python
 data_test = pd.read_csv('test.csv')
